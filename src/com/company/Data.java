@@ -43,31 +43,14 @@ public class Data {
                 case 1:
                     {
                         String[] headers = {"ID","Name","Email", "Address","Grade","Score"};
-                        Object[][] data = new Object[studentList.size()][headers.length];
-                        for(int i = 0 ; i < studentList.size() ; i ++ ){
-                            Student student = studentList.get(i);
-                            data[i][0] = student.getId();
-                            data[i][1] = student.getName();
-                            data[i][2] = student.getEmail();
-                            data[i][3] = student.getAddress();
-                            data[i][4] = student.getGrade();
-                            data[i][5] = student.getScore();
-                        }
+                        Object[][] data = mapData(MapType.STUDENT,headers.length);
                         System.out.println(FlipTableConverters.fromObjects(headers,data));
                         break;
                     }
                 case 2:
                     {
                         String[] headers = {"ID","Name","Email", "Address","Class Manage"};
-                        Object[][] data = new Object[teacherList.size()][headers.length];
-                        for(int i = 0 ; i < teacherList.size() ; i ++ ){
-                            Teacher teacher = teacherList.get(i);
-                            data[i][0] = teacher.getId();
-                            data[i][1] = teacher.getName();
-                            data[i][2] = teacher.getEmail();
-                            data[i][3] = teacher.getAddress();
-                            data[i][4] = teacher.getClassManage();
-                        }
+                        Object[][] data = mapData(MapType.TEACHER,headers.length);
                         System.out.println(FlipTableConverters.fromObjects(headers,data));
                         break;
                     }
@@ -79,5 +62,42 @@ public class Data {
     }
 
 
+    Object[][] mapData(MapType mapType,int headersLength){
+        switch (mapType){
+            case STUDENT:
+            {
+                Object[][] data = new Object[studentList.size()][headersLength];
+                for(int i = 0 ; i < studentList.size() ; i ++ ){
+                    Student student = studentList.get(i);
+                    data[i][0] = student.getId();
+                    data[i][1] = student.getName();
+                    data[i][2] = student.getEmail();
+                    data[i][3] = student.getAddress();
+                    data[i][4] = student.getGrade();
+                    data[i][5] = student.getScore();
+                }
+                return data;
+            }
+            case TEACHER:
+            {
+                Object[][] data = new Object[teacherList.size()][headersLength];
+                for(int i = 0 ; i < teacherList.size() ; i ++ ){
+                    Teacher teacher = teacherList.get(i);
+                    data[i][0] = teacher.getId();
+                    data[i][1] = teacher.getName();
+                    data[i][2] = teacher.getEmail();
+                    data[i][3] = teacher.getAddress();
+                    data[i][4] = teacher.getClassManage();
+                }
+                return data;
+            }
+            default:
+                return new Object[0][0];
+        }
+    }
 
+}
+enum MapType {
+    STUDENT,
+    TEACHER
 }
